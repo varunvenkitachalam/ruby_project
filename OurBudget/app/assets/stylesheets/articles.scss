@@ -1,0 +1,33 @@
+// Place all the styles related to the Articles controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+table {
+  width: auto;
+}
+table, th, td {
+  border: 1px solid maroon;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 10px;
+  text-align: center;
+}
+table#t01 tr:nth-child(even) {
+  background-color: #ee1ee9;
+}
+table#t01 tr:nth-child(odd) {
+  background-color: #32ff29;
+}
+table#t01 th {
+  background-color: #58c6ee;
+  color: #ff8224;
+}
+
+#signin
+  .field input {
+     width:60px;
+   }
+  .spacer input{
+    padding-top:70px;
+  }

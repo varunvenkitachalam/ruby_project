@@ -1,0 +1,143 @@
+
+<h1>Listing Budgets</h1>
+
+<div id="signin">
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Limit</th>
+    <% counter = 1 %>
+    <% @articles.each do |article| %>
+      <% if counter== 1 %>
+        <% article.budgets.each do |budget| %>
+          <th> Week  <%= counter %></th>
+          <% counter = counter + 1 %>
+         <%end %>
+        <%end %>
+      <%end %>
+
+  </tr>
+  <% @articles.each do |article| %>
+    <tr>
+      <td ><%= link_to article.title, article_path(article) %></td>
+      <td><%= article.budgetLimit %></td>
+      <%article.budgets.each do |budget| %>
+        <% if budget.newLimit > article.budgetLimit %>
+           <td style="color:red;"><%= budget.newLimit %> </td>
+          <%else %>
+            <td style="color:green;"><%= budget.newLimit %> </td>
+          <%end %>
+      <%end %>
+        <%= form_with(model: [ article, article.budgets.build ], local: true, ) do |form| %>
+
+        <td>
+          <div class="field">
+            <%= form.text_field :newLimit %>
+          </div>
+          <%= form.submit :add %>
+      <% end %>
+    </tr>
+  <% end %>
+
+
+</table>
+
+  <p></p>
+  <h2>Monthly Average</h2>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <% counter = 0 %>
+    <% @articles.each do |article| %>
+      <% if counter== 0 %>
+        <% article.budgets.each do |budget| %>
+          <% if counter % 4 == 0 && counter !=0 %>
+              <th> Month  <%= counter/4 %></th>
+            <%end %>
+          <% counter = counter + 1 %>
+        <%end %>
+      <%end %>
+    <%end %>
+  </tr>
+  <tr>
+    <% @articles.each do |article| %>
+    <tr>
+      <td ><%= link_to article.title, article_path(article) %></td>
+      <% counter = 1 %>
+      <% averageBudget = 0.0 %>
+      <%article.budgets.each do |budget| %>
+        <% if budget.newLimit != nil %>
+          <% averageBudget = averageBudget + budget.newLimit %>
+          <% if counter % 4 == 0 %>
+            <% if (averageBudget/4 *100).round / 100.0 > article.budgetLimit %>
+              <td style="color:red;"><%= (averageBudget/4 *100).round / 100.0 %> </td>
+            <%else %>
+              <td style="color:green;"><%= (averageBudget/4 *100).round / 100.0 %> </td>
+            <%end %>
+            <% averageBudget = 0 %>
+          <%end %>
+          <% counter = counter + 1 %>
+        <%end %>
+        <%end %>
+
+    <%end %>
+  </tr>
+
+
+</table>
+
+<p></p>
+
+  <h2>Total Average</h2>
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Total Average</th>
+  </tr>
+  <tr>
+    <% @articles.each do |article| %>
+    <tr>
+      <td ><%= link_to article.title, article_path(article) %></td>
+      <% counter = 0 %>
+      <% averageBudget = 0.0 %>
+      <%article.budgets.each do |budget| %>
+        <% if budget.newLimit != nil %>
+          <% averageBudget = averageBudget + budget.newLimit %>
+          <% counter = counter + 1 %>
+          <%end %>
+        <%end %>
+      <% if averageBudget/counter > 0 %>
+        <% if (averageBudget/counter *100).round / 100.0 > article.budgetLimit %>
+          <td style="color:red;"><%= (averageBudget/counter *100).round / 100.0 %> </td>
+        <%else %>
+          <td style="color:green;"><%= (averageBudget/counter *100).round / 100.0 %> </td>
+        <%end %>
+      <%end %>
+
+  <%end %>
+  </tr>
+
+</table>
+  <h2>Add a new Budget</h2>
+  <%= form_with scope: :article, url: articles_path, local: true do |form| %>
+    <p style="font-weight: bold">
+      <%= form.label :Budget_name %><br>
+      <%= form.text_field :title %>
+    </p>
+
+    <p>
+    <div class="field", style="font-weight: bold">
+      <%= form.label :budget_limit %><br>
+      <%= form.text_field :budgetLimit %>
+    </div>
+    </p>
+
+    <p>
+      <%= form.submit :'Create Budget' %>
+    </p>
+
+
+  <% end %>
+</div>

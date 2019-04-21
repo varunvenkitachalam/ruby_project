@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  week: 
+  newLimit: 1.5
+  article: one
+
+two:
+  week: 
+  newLimit: 1.5
+  article: two
