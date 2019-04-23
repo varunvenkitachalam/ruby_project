@@ -1,7 +1,14 @@
+<p>
+  <strong>Title:</strong>
+  <%= @article.title %>
+</p>
 
-<h1>Edit article</h1>
+<p>
+  <strong>Budget Limit:</strong>
+  <%= @budget.newLimit %>
+</p>
 
-<%= form_with(model: @article, local: true) do |form| %>
+<%= form_with(model: [ @article, @budget ], local: true, ) do |form| %>
 
   <% if @article.errors.any? %>
     <div id="error_explanation">
@@ -18,13 +25,8 @@
   <% end %>
 
   <p>
-    <%= form.label :title %><br>
-    <%= form.text_field :title %>
-  </p>
-
-  <p>
-    <%= form.label :budget %><br>
-    <%= form.text_area :budgetLimit %>
+    <%= form.label :New_Limit%><br>
+    <%= form.text_field :newLimit %>
   </p>
 
   <p>
