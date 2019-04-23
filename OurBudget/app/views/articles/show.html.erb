@@ -11,10 +11,10 @@
 
 <h2>Budgets</h2>
 <% counter = 1 %>
-<% @articles.each do |article| %>
+
   <% if counter== 1 %>
-    <% article.budgets.each do |budget| %>
-      <% if budget.newLimit > article.budgetLimit %>
+    <% @article.budgets.each do |budget| %>
+      <% if budget.newLimit > @article.budgetLimit %>
         <p style="color:red"> Week  <%= counter %> : <%= budget.newLimit %></p>
       <%else %>
         <p style="color:green"> Week  <%= counter %> : <%= budget.newLimit %></p>
@@ -22,7 +22,7 @@
       <% counter = counter + 1 %>
     <%end %>
   <%end %>
-<%end %>
+
 
 
 <%= link_to 'Edit', edit_article_path(@article) %> |
